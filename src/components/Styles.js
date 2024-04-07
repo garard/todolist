@@ -79,14 +79,13 @@ const Styles = StyleSheet.create({
   middle: {
     backgroundColor: "lightgrey",
     alignItems: "center",
-    backgroundColor: "#ADD8E6",
     justifyContent: "center",
     width: "100%",
     height: "82%",
   },
 
   body: {
-    width: "90%",
+    width: "100%",
     height: "100%",
     backgroundColor: "#ADD8E6",
     flexWrap: "wrap",
