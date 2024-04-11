@@ -1,17 +1,66 @@
-import { Text, View, Pressable, TextInput, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  Pressable,
+  TextInput,
+  Alert,
+  ToastAndroid,
+} from "react-native";
 import Styles from "../components/Styles";
-import {React, useState} from "react";
-import { Ionicons } from "@expo/vector-icons"
+import React, { useState, useEffect } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { loadData, saveData } from "../datamodel/mydata";
 
-export default NewTodo = function ({ navigation }) {
-  const navToHome = () => navigation.popToTop();
-  const resetTask = () => {};
-  const addNewTask = () => {};
-  const [description, setDescription] = useState('');
-  const [title, setTitle] = useState('');
+export default function NewTodo({ navigation }) {
+  const [tasks, setTasks] = useState([]);
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
 
+  const navToHome = () => {
+    navigation.navigate("Home");
+  };
 
+  useEffect(() => {
+    const firstLoad = async () => {
+      const myData = await loadData();
+      console.log(myData);
+      console.log("my data");
+      setTasks(myData);
+    };
+    firstLoad();
+  }, []);
+
+  useEffect(() => {
+    saveData(tasks);
+    console.log(tasks);
+  }, [tasks]);
+
+  const successAlert = () =>
+    ToastAndroid.show("Todo Added!", ToastAndroid.SHORT);
+
+  const addNewTask = () => {
+    if (!title && !description) failureAlert("Title and Description");
+    else if (!title) failureAlert("Title");
+    else if (!description) failureAlert("Description");
+    else {
+      successAlert();
+      const addTask = [title, description, "0", "0"];
+
+      const updatedTasks = [addTask, ...tasks];
+      setTasks(updatedTasks);
+
+      // Reset input fields
+      setTitle("");
+      setDescription("");
+    }
+  };
+
+  const failureAlert = (failedField) => {
+    Alert.alert("Todo not Added", `${failedField} must not be empty`, [
+      { text: "OK" },
+    ]);
+  };
 
   return (
     <SafeAreaView style={Styles.container}>
@@ -21,59 +70,69 @@ export default NewTodo = function ({ navigation }) {
 
       <View style={Styles.middle}>
         <View style={Styles.body}>
-            <Text
-              style={{ fontSize: 20, textAlign: "left", marginVertical: 10, width: "90%"}}
-              onPress={navToHome}
-            >
-              Title
-            </Text>
-          
-
+          <Text
+            style={Styles.titleBar}
+          >
+            Title
+          </Text>
           <TextInput
-            style={[
-              Styles.box,
-              { width: "90%", height: 40, padding: 5, fontSize: 20 , textAlign: "center", marginBottom: 15},
-            ]}
+            style={[Styles.textBox]}
             placeholder="Enter a Title..."
+            onChangeText={(text) => setTitle(text)}
+            value={title}
           />
 
           <Text
-            style={{ fontSize: 20, textAlign: "left", marginVertical: 10, width: "90%"}}
-            onPress={navToHome}
+            style={Styles.titleBar}
           >
             Description
           </Text>
-
           <TextInput
             style={[
-              Styles.box,
+              Styles.textBox,
               {
-                width: "90%",
                 height: "50%",
-                padding: 5,
-                fontSize: 20,
-                textAlign: "center",
               },
             ]}
             multiline={true}
-            value={description}
             placeholder="Enter a Description..."
-            
+            onChangeText={(text) => setDescription(text)}
+            value={description}
           />
         </View>
       </View>
 
-    <View style={Styles.navFooter}>
-        <Pressable style={[Styles.box, {height: 40, width: 100, borderRadius: 15}]} onPress={navToHome}>
-            <Ionicons name = {'arrow-back-outline'} color={"red"} size={20} />
-            <Text style={[Styles.text, {fontSize: 20, fontWeight: 'bold', marginLeft: 3}]}>Back</Text>
+      <View style={Styles.navFooter}>
+        <Pressable
+          style={[Styles.box, { height: 40, width: 100, borderRadius: 15 }]}
+          onPress={navToHome}
+        >
+          <Ionicons name={"arrow-back-outline"} color={"red"} size={20} />
+          <Text
+            style={[
+              Styles.text,
+              { fontSize: 20, fontWeight: "bold", marginLeft: 3 },
+            ]}
+          >
+            Back
+          </Text>
         </Pressable>
-            
-        <Pressable style={[Styles.box, {height: 40, width: 100, borderRadius: 15}]} onPress={addNewTask}>
-            <Ionicons name = {'save-outline'} color={"green"} size={20} />
-            <Text style={[Styles.text, {fontSize: 20, fontWeight: 'bold', marginLeft: 3}]}>Save</Text>
+
+        <Pressable
+          style={[Styles.box, { height: 40, width: 100, borderRadius: 15 }]}
+          onPress={addNewTask}
+        >
+          <Ionicons name={"save-outline"} color={"green"} size={20} />
+          <Text
+            style={[
+              Styles.text,
+              { fontSize: 20, fontWeight: "bold", marginLeft: 3 },
+            ]}
+          >
+            Save
+          </Text>
         </Pressable>
-    </View>
+      </View>
     </SafeAreaView>
   );
-};
+}

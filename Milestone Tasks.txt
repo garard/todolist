@@ -1,0 +1,41 @@
+Requirements
+
+                        1. Home Screen Initialization:
+                        • The app should launch displaying the Home screen, which lists all todos.
+
+                        2. Enhanced Add New Todo Screen:
+                        • Upon clicking the "Add New Todo" button, users are navigated to the "Add New Todo" screen.
+
+        3. Implement input validation for the Title and Description fields:
+        • Both fields must not be empty for the todo to be successfully added.
+                        • If either field is left empty upon pressing the "Save" button, prevent the todo from being added. There is no need for an error message in this iteration.
+
+                        4. Upon successful validation and pressing the "Save" button:
+                        • Display a pop-up or toast notification indicating "Todo Added Successfully."
+                        • Remain on the "Add New Todo" screen but clear the input fields to allow for the addition of new todos.
+
+                        5. Navigation and Button Label Changes:
+                        • Change the text of the "Cancel" button on the "Add New Todo" screen to "Back."
+                        • The "Back" button should navigate users back to the Home screen.
+
+                        6. Dynamic Todo Listing:
+                        • Use a FlatList component to display all todos on the Home screen. This allows for efficient scrolling when numerous todos are present.
+                        • Each todo item in the list should initially display in a "contracted" mode, showing only its title, alongside a caret-down (↓) icon to indicate that the todo can be expanded.
+
+                        7. Todo Expand/Collapse Functionality:
+                        • Tapping the caret icon toggles the display mode of the todo item between contracted and expanded views.
+                        • In the expanded view, display the todo's title, description, and a control panel with icons.
+
+                        8. The control panel in expanded mode displays:
+                        • A green tick icon for marking the todo as finished.
+                        • A red delete icon for removing the todo from the list.
+
+        9. Todo State Management:
+        • Newly created todos are marked as not finished by default.
+                        • Tapping the green tick icon changes the todo's state to finished, and the tick icon should no longer be displayed for that todo.
+                        • Tapping the red delete icon removes the todo from the list.
+                        • The caret icon should allow users to toggle between expanded and contracted views for each todo, reflecting the todo's current state and available actions.
+
+        10. Data Persistence:
+        • Implement AsyncStorage to locally store the todos and their states (finished/not finished).
+        • Ensure that todos persist across app launches and reflect the latest changes made by the user, including additions, deletions, and state updates.

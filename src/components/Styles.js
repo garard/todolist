@@ -126,5 +126,40 @@ const Styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  taskDisplay: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "black",
+    width: 350,
+    borderRadius: 15,
+    marginBottom: 10,
+    backgroundColor: 'white',
+  },
+  buttonPosition: {
+    flexDirection: "row",
+    marginTop: 20,
+    justifyContent: "space-between",
+  },
+  titleBar: {
+    fontSize: 20,
+    textAlign: "left",
+    marginVertical: 10,
+    width: "90%",
+  },
+  textBox: {
+    flexDirection: "row",
+    borderWidth: 1,
+    backgroundColor: "white",
+    width: 80,
+    height: 80,
+    alignItems: "center",
+    justifyContent: "center",
+    width: "90%",
+    height: 40,
+    padding: 5,
+    fontSize: 20,
+    textAlign: "center",
+    marginBottom: 15,
+  }
 });
 export default Styles;
